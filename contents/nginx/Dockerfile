@@ -1,4 +1,4 @@
-FROM debian
+FROM debian AS nginx_container
 USER root
 RUN apt update && apt upgreade -y \
 && apt install -y curl gnupg2 ca-certificates lsb-release debian-archive-keyring \
