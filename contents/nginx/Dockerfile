@@ -1,7 +1,7 @@
 FROM debian AS nginx_container
 USER root
 RUN /bin/bash -c 'apt update && apt upgrade -y \
-&& apt install -y curl gnupg2 ca-certificates lsb-release debian-archive-keyring \
+&& apt install -y curl gnupg2 ca-certificates lsb-release debian-archive-keyring sudo \
 && curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
     | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null \
 && echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
