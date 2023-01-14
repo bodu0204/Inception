@@ -10,4 +10,4 @@ http://nginx.org/packages/debian `lsb_release -cs` nginx" \
 && echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" \
     | tee /etc/apt/preferences.d/99nginx \
 && apt update && apt install -y nginx'
-CMD [ "nginx", "-g"," 'daemon off;'"]
+CMD [ "nginx", "-g","daemon off;"]
