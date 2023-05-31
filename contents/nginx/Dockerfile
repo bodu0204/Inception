@@ -1,14 +1,11 @@
-FROM debian AS nginx_container
+FROM debian
 USER root
-RUN /bin/bash -c 'apt update && apt upgrade -y \
-&& apt install -y curl gnupg2 ca-certificates lsb-release debian-archive-keyring \
-&& curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
-    | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null \
-&& echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
-http://nginx.org/packages/debian `lsb_release -cs` nginx" \
-    | tee /etc/apt/sources.list.d/nginx.list \
-&& echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" \
-    | tee /etc/apt/preferences.d/99nginx \
-&& apt update && apt install -y nginx'
-ENTRYPOINT ["nginx"]
-#CMD ["-g","daemon off;"]
+RUN /bin/bash -c ' \
+apt update && apt upgrade -y && apt install -y nginx php-fpm \
+'
+COPY ./nginx.conf /etc/nginx/
+COPY ./php-fpm.conf /etc/php/7.4/fpm/
+COPY ./test.php /var/www/html
+
+ENTRYPOINT ["/bin/bash","-c"]
+CMD ["php-fpm7.4 ; nginx -g 'daemon off;' ;"]
