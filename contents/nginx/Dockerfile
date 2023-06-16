@@ -1,11 +1,10 @@
-FROM debian
+FROM debian:buster
 USER root
 RUN /bin/bash -c ' \
-apt update && apt upgrade -y && apt install -y nginx php-fpm \
-'
+apt update && apt upgrade -y && apt install -y nginx'
 COPY ./nginx.conf /etc/nginx/
-COPY ./php-fpm.conf /etc/php/7.4/fpm/
-COPY ./test.php /var/www/html
+COPY ./localhost.crt /etc/ssl/certs/localhost.crt
+COPY ./localhost.key /etc/ssl/private/localhost.key
 
 ENTRYPOINT ["/bin/bash","-c"]
-CMD ["php-fpm7.4 ; nginx -g 'daemon off;' ;"]
+CMD ["nginx -g 'daemon off;' ;"]

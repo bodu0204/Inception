@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  webserver:
+    build: nginx
+    container_name: Container_NGINX
+    ports:
+      - "443:443"
+  fast-cgi:
+    build: php
+    container_name: Container_WordPress_PHP
+  database:
+    build: mariaDB
+    container_name: Container_DB

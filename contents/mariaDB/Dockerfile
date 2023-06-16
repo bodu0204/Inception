@@ -1,7 +1,11 @@
-FROM debian AS mariaDB_container
+FROM debian:buster
 USER root
 RUN /bin/bash -c 'apt update && apt upgrade -y \
-&& apt install -y curl \
-&& curl https://dlm.mariadb.com/2700598/MaxScale/22.08.3/packages/debian/buster/aarch64/maxscale-22.08.3-1.debian.buster.aarch64.deb -O'
-ENTRYPOINT ["/bin/bash"]
-#CMD []
+	&& apt install -y mariadb-server'
+COPY ./mariadb.conf /etc/mysql/mariadb.cnf
+COPY ./DBinit.sh /
+RUN ["chmod", "755", "/DBinit.sh"]
+RUN ["/bin/bash","/DBinit.sh"]
+RUN ["rm", "/DBinit.sh"]
+ENTRYPOINT ["/bin/bash","-c"]
+CMD ["mysqld_safe --foreground --user=mysql"]
