@@ -39,6 +39,9 @@ services:
     hostname: DB.incep
     networks:
       - inception_net
+    volumes:
+      - ./DBdata:/var/lib/mysql/
+    
 
 networks:
   inception_net:
