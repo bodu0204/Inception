@@ -1,13 +1,13 @@
 #!/bin/bash
-openssl genrsa -out localhost.key 2048 &&
-echo "localhost.key was made." &&
-openssl req -out localhost.csr -key localhost.key -new -nodes -subj "/C=JP/ST=Tokyo/L=Ropongi/CN=localhost"&&
-echo "localhost.csr was made." &&
-openssl x509 -req -days 1 -signkey localhost.key -in localhost.csr -out localhost.crt -extfile ${0%/*}/san.txt &&
-echo "localhost.crt was made." 
+openssl genrsa -out blyu.42.fr.key 2048 &&
+echo "blyu.42.fr.key was made." &&
+openssl req -out blyu.42.fr.csr -key blyu.42.fr.key -new -nodes -subj "/C=JP/ST=Tokyo/L=Ropongi/CN=blyu.42.fr"&&
+echo "blyu.42.fr.csr was made." &&
+openssl x509 -req -days 1 -signkey blyu.42.fr.key -in blyu.42.fr.csr -out blyu.42.fr.crt -extfile ${0%/*}/san.txt &&
+echo "blyu.42.fr.crt was made." 
 
-#openssl req -x509 -newkey rsa:4096 -nodes -keyout localhost.key -out localhost.crt -days 1 -subj "/C=JP/ST=Tokyo/L=Ropongi/CN=Webserv.localhost" -extfile san.txt;
-sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" "./localhost.crt" &&
+#openssl req -x509 -newkey rsa:4096 -nodes -keyout blyu.42.fr.key -out blyu.42.fr.crt -days 1 -subj "/C=JP/ST=Tokyo/L=Ropongi/CN=Webserv.blyu.42.fr" -extfile san.txt;
+sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" "./blyu.42.fr.crt" &&
 echo "security was set."
 
 # security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" "証明書のパス"
