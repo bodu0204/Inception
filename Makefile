@@ -1,23 +1,23 @@
 NAME	 		= Inception
-WORDPRESS_TAR	= wordpress-6.2.2-ja.tar
-NGINX			= nginx/Dockerfile nginx/nginx.conf
-MARIADB			= mariaDB/Dockerfile mariaDB/init.sh mariaDB/mariadb.conf
-PHP				= php/Dockerfile php/conf/php-fpm.conf php/conf/php.ini php/conf/pool.d/www.conf
-WORDPRESS		= wordpress/
-DBDATA			= DBdata/
-SSL_KEY			= nginx/blyu.42.fr.key
-SSL_CSR			= nginx/blyu.42.fr.csr
-SSL_CRT			= nginx/blyu.42.fr.crt
-SAN				= san.txt
+WORDPRESS_TAR	= srcs/wordpress-6.2.2-ja.tar
+NGINX			= srcs/nginx/Dockerfile nginx/nginx.conf
+MARIADB			= srcs/mariaDB/Dockerfile mariaDB/init.sh mariaDB/mariadb.conf
+PHP				= srcs/php/Dockerfile php/conf/php-fpm.conf php/conf/php.ini php/conf/pool.d/www.conf
+WORDPRESS		= srcs/wordpress/
+DBDATA			= srcs/DBdata/
+SSL_KEY			= srcs/nginx/blyu.42.fr.key
+SSL_CSR			= srcs/nginx/blyu.42.fr.csr
+SSL_CRT			= srcs/nginx/blyu.42.fr.crt
+SAN				= srcs/san.txt
 
 all : $(WORDPRESS) $(DBDATA) $(SSL_KEY) $(SSL_CRT) $(SAN) register_dn
-	docker compose up || true;
+	cd srcs && docker compose up || true;
 
 noerror : $(WORDPRESS) $(DBDATA) $(SSL_KEY) $(SSL_CRT) $(SAN) register_dn register_srt
-	docker compose up || true;
+	cd srcs && docker compose up || true;
 
 $(WORDPRESS) : $(WORDPRESS_TAR)
-	tar xvf $^
+	tar xvf $^ -C srcs/
 
 $(DBDATA) :
 	mkdir $@
@@ -44,8 +44,8 @@ clean :
 	rm -rf $(SSL_KEY) $(SSL_CSR) $(SSL_CRT) $(SAN)
 
 fclean : clean
-	docker compose down
+	cd srcs && docker compose down
 	rm -rf $(WORDPRESS) $(DBDATA)
-	docker image rm contents-webserver contents-fast-cgi contents-database || true
+	docker image rm webserver fast-cgi database || true
 
 re : fclean all

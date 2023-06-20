@@ -6,5 +6,4 @@ COPY ./nginx.conf /etc/nginx/
 COPY ./blyu.42.fr.crt /etc/ssl/certs/
 COPY ./blyu.42.fr.key /etc/ssl/private/
 
-ENTRYPOINT ["/bin/bash","-c"]
-CMD ["nginx -g 'daemon off;' ;"]
+CMD ["nginx","-g","daemon off;"]
