@@ -1,7 +1,7 @@
 FROM debian:buster
 USER root
 RUN /bin/bash -c 'apt update && apt upgrade -y \
-	&& apt install -y mariadb-server procps'
+	&& apt install -y mariadb-server'
 COPY ./mariadb.conf /etc/mysql/my.cnf
 COPY ./init.sh /
 RUN ["mkdir", "/run/mysqld/"]

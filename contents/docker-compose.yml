@@ -1,19 +1,6 @@
 version: '3'
 
 services:
-#  wordpress:
-#    depends_on:
-#      - database
-#    image: wordpress:latest
-#    ports:
-#      - "80:80"
-#    restart: always
-#    environment:
-#      WORDPRESS_DB_HOST: DB.incep:3306
-#      WORDPRESS_DB_USER: wordpress
-#      WORDPRESS_DB_PASSWORD: password
-#    networks:
-#      - inception_net
   webserver:
     build: nginx
     container_name: Container_NGINX
@@ -41,7 +28,6 @@ services:
       - inception_net
     volumes:
       - ./DBdata:/var/lib/mysql/
-    
 
 networks:
   inception_net:
