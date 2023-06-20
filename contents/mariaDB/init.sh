@@ -2,6 +2,7 @@
 if [ -d /var/lib/mysql_buff ]; then
     cp -rf /var/lib/mysql_buff/*  /var/lib/mysql/
     rm -rf /var/lib/mysql_buff
+    chmod 777 /var/lib/mysql /var/lib/mysql/* /var/lib/mysql/*/* || true
     mysqld_safe > /dev/null 2>&1 &
     mysql -u root -e "" > /dev/null 2>&1
     while [ $? -ne 0 ]; do

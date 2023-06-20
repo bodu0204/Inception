@@ -9,4 +9,4 @@ COPY ./conf /etc/php/8.2/fpm/
 RUN mkdir /run/php/
 
 ENTRYPOINT ["/bin/bash","-c"]
-CMD ["php-fpm8.2 -F;"]
+CMD ["chmod 777 /var/www/html/ /var/www/html/* /var/www/html/*/* || true; php-fpm8.2 -F;"]
