@@ -32,7 +32,7 @@ $(SSL_CRT) : $(SSL_KEY) $(SSL_CSR) $(SAN)
 	openssl x509 -req -days 30 -signkey $(SSL_KEY) -in $(SSL_CSR) -out $@ -extfile $(SAN)
 
 $(SAN) :
-	echo 'subjectAltName = DNS:*.blyu.42.fr, DNS:blyu.42.fr' > $@
+	echo 'subjectAltName = DNS:*.blyu.42.fr, DNS:blyu.42.fr, DNS:*.localhost, DNS:localhost' > $@
 
 register_srt : $(SSL_CRT)
 	sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" $^
